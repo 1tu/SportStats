@@ -1,0 +1,6 @@
+_doc
+node_modules
+tmp
+.env
+package-lock.json
+database/development.sqlite
