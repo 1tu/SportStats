@@ -1,6 +1,19 @@
+.DS_Store
 _doc
 node_modules
 tmp
 .env
 package-lock.json
+npm-debug.log
+yarn-error.log
+
 database/development.sqlite
+dist/
+
+
+# Editor directories and files
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
