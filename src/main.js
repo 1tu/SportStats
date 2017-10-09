@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import {
-  Vuetify, VApp, VNavigationDrawer, VFooter, VList, VSelect,
+  Vuetify, VApp, VNavigationDrawer, VFooter, VList, VSelect, VDataTable,
   VBtn, VIcon, VGrid, VToolbar, VForm, VTextField, transitions
 } from 'vuetify'
 
 Vue.use(Vuetify, {
   components: {
     VApp, VNavigationDrawer, VFooter, VList, VBtn, VIcon, VGrid, VToolbar,
-    VForm, VTextField, VSelect, transitions
+    VForm, VTextField, VSelect, transitions, VDataTable
   }
 })
 

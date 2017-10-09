@@ -1,22 +1,17 @@
 'use strict'
+// import * as Models from '../@Types/Models'
+// import Chance from 'chance'
 
-/*
-|--------------------------------------------------------------------------
-| Factory
-|--------------------------------------------------------------------------
-|
-| Factories are used to define blueprints for database tables or Lucid
-| models. Later you can use these blueprints to seed your database
-| with dummy data.
-|
-*/
-
-// const Factory = use('Factory')
-
-/**
-  Factory.blueprint('App/Models/User', (faker) => {
-    return {
-      username: faker.username()
-    }
+const Factory = use('Factory')
+Factory.blueprint('App/Models/User',
+  /**
+   * @param {Chance.Chance} faker
+   * @return {Models.User}
+   */
+  (faker, i, data) => ({
+    username: data.username || faker.username(),
+    email: data.email || faker.email(),
+    password: data.password || faker.password(),
+    role_id: data.role,
   })
-*/
+)

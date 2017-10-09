@@ -36,7 +36,7 @@ export default {
       console.log(this.$route)
     },
     switchLang() {
-      this.$i18n.locale = 'en';
+      this.$i18n.locale = this.$i18n.locale === 'en' ? 'ru' : 'en';
       this.$router.push(this.$route.fullPath);
     }
   }

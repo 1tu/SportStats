@@ -3,8 +3,11 @@
 const Model = use('Model')
 
 class Role extends Model {
+  static get createdAtColumn() { return null }
+  static get updatedAtColumn() { return null }
+
   permissions() {
-    return this.hasMany('App/Models/Permission')
+    return this.belongsToMany('App/Models/Permission')
   }
 }
 
