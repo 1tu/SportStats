@@ -4,12 +4,13 @@ node_modules
 tmp
 .env
 package-lock.json
-npm-debug.log
-yarn-error.log
+yarn.lock
+*.log
 
 database/development.sqlite
 dist/
-
+src/**/*.map
+coverage/
 
 # Editor directories and files
 .idea

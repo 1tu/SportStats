@@ -1,0 +1,25 @@
+v-navigation-drawer(persistent clipped app :value='navShow')
+  v-list(dense)
+    template(v-for='(item, i) in routes')
+      v-layout(row v-if='item.heading' align-center :key='i')
+        v-flex(xs12)
+          v-subheader(v-if='item.heading') {{ item.heading }}
+
+      v-list-group(v-else-if='item.children' v-model='item.model' no-action)
+        v-list-tile(slot='item')
+          v-list-tile-action
+            v-icon {{ item.model ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
+          v-list-tile-content
+            v-list-tile-title {{ item.title }}
+
+        v-list-tile(v-for='(child, j) in item.children' :key='j' @click='$router.push(child.path)')
+          v-list-tile-action(v-if='child.icon')
+            v-icon {{ child.icon }}
+          v-list-tile-content
+            v-list-tile-title {{ child.title }}
+
+      v-list-tile(v-else @click='$router.push(item.path)')
+        v-list-tile-action(v-if='item.icon')
+          v-icon {{ item.icon }}
+        v-list-tile-content
+          v-list-tile-title {{ item.title }}
