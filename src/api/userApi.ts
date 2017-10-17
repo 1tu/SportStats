@@ -1,15 +1,15 @@
 import axios from 'axios';
-import { CommonApi } from './Common';
-import { User } from '../../@Types/Models';
+import { CommonApi } from './_base';
+import { User } from '../../@Types';
 
-export const userApi = new CommonApi<User>('user');
-
-class UserApi<M> extends CommonApi<M> {
-  constructor(modelName: string) {
-    super(modelName);
+class UserApi extends CommonApi<User> {
+  constructor() {
+    super('user');
   }
 
   getProfile() {
     return axios.get('/profile');
   }
 }
+
+export const userApi = new UserApi();

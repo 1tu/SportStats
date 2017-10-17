@@ -38,6 +38,10 @@ class ImageSchema extends Schema {
         table.timestamps()
       })
 
+    this.alter('users', (table) => {
+      table.integer('organization_id').unsigned().references('id').inTable('organizations')
+    })
+
     this.create('teams',
       /**
        * @param {TableBuilder} table
@@ -61,22 +65,28 @@ class ImageSchema extends Schema {
         table.increments()
         table.integer('trainer_id').notNullable().unsigned().references('id').inTable('trainers')
         table.integer('team_id').notNullable().unsigned().references('id').inTable('teams')
+        table.date('hired_at').notNullable().defaultTo(this.fn.now())
+        table.date('fired_at')
       })
 
-    this.alter('users', (table) => {
-      table.integer('organization_id').unsigned().references('id').inTable('organizations')
-    })
-
-    this.alter('sportsmen', (table) => {
-      table.integer('team_id').unsigned().references('id').inTable('teams')
-    })
+    this.create('sportsman_team',
+      /**
+       * @param {TableBuilder} table
+       */
+      (table) => {
+        table.increments()
+        table.integer('sportsman_id').notNullable().unsigned().references('id').inTable('sportsmen')
+        table.integer('team_id').notNullable().unsigned().references('id').inTable('teams')
+        table.date('hired_at').notNullable().defaultTo(this.fn.now())
+        table.date('fired_at')
+      })
   }
 
   down() {
-    this.alter('sportsmen', table => { table.dropForeign('team_id') })
-    this.alter('users', table => { table.dropForeign('organization_id') })
+    this.drop('sportsman_team')
     this.drop('trainer_team')
     this.drop('teams')
+    this.alter('users', table => { table.dropForeign('organization_id') })
     this.drop('organizations')
     this.drop('images')
   }

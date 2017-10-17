@@ -3,6 +3,10 @@
 const Model = use('Model')
 
 class StatsTemplateIndividual extends Model {
+  static get hidden() {
+    return ['sport_id']
+  }
+
   sport() {
     return this.belongsTo('App/Models/Sport')
   }

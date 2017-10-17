@@ -1,0 +1,7 @@
+v-data-table.elevation-1(:headers="headers" :items="items" hide-actions)
+  template(slot="items" scope="props")
+    td {{ props.item.id }}
+    td.text-xs-right {{ props.item.name }}
+    td.text-xs-right {{ props.item.name_full }}
+    td.text-xs-right
+      v-btn(@click='$router.push("/team/" + props.item.id)') show

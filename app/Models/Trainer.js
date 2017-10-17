@@ -6,7 +6,11 @@ class Trainer extends Model {
   static boot() {
     super.boot()
 
-    this.addHook('afterCreate', 'Shared.createProfile')
+    this.addHook('afterCreate', 'SharedHooks.createProfile')
+  }
+
+  static get hidden() {
+    return ['profile_id', 'user_id', 'sport_id']
   }
 
   user() {

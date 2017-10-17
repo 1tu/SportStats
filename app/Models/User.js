@@ -3,24 +3,28 @@
 const Model = use('Model')
 
 class User extends Model {
-  static boot () {
+  static boot() {
     super.boot()
 
-    this.addHook('beforeCreate', 'User.hashPassword')
-    this.addHook('afterCreate', 'Shared.createProfile')
+    this.addHook('beforeCreate', 'UserHooks.hashPassword')
+    this.addHook('afterCreate', 'SharedHooks.createProfile')
 
-    this.addHook('beforeSave', 'User.setUserRole')
+    this.addHook('beforeSave', 'UserHooks.setUserRole')
   }
 
-  tokens () {
+  static get hidden() {
+    return ['password', 'role_id', 'organization_id']
+  }
+
+  tokens() {
     return this.hasMany('App/Models/Token')
   }
 
-  role () {
+  role() {
     return this.belongsTo('App/Models/Role')
   }
 
-  profile () {
+  profile() {
     return this.belongsTo('App/Models/Profile')
   }
 }

@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import { dGet } from '../../store/modules/user';
-import { User } from '../../../@Types/Models';
+import { dUserGet } from '../../store/modules/user';
+import { User } from '../../../@Types';
 // import { readProductNames, readTotalAmountWithoutDiscount, dispatchUpdateTotalAmount } from './store';
 
 @Component({
@@ -11,7 +11,7 @@ export class SsUser extends Vue {
   item: User = null;
 
   async mounted() {
-    this.item = await dGet(this.$store, parseInt(this.$route.params.id));
+    this.item = await dUserGet(this.$store, parseInt(this.$route.params.id));
   }
 }
 

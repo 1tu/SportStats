@@ -1,7 +1,7 @@
 'use strict'
-const CommonController = require('../CommonController')
+const BaseController = require('../_baseController')
 
-class PropertyIndividualController extends CommonController {
+class PropertyIndividualController extends BaseController {
 }
 
 module.exports = PropertyIndividualController

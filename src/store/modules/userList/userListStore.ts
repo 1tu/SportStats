@@ -1,15 +1,14 @@
 import { ActionContext, Store, Module } from 'vuex';
-import { UserListState } from './UserListState';
+import { UserListState } from './UserListStoreState';
 import { getStoreAccessors } from 'vuex-typescript';
 import { State as RootState } from '../../index';
-import { User } from '../../../../@Types/Models';
+import { User } from '../../../../@Types';
 import { userApi } from '../../../api/userApi';
 
 type UserContext = ActionContext<UserListState, RootState>;
 
 export const userList = {
   namespaced: true,
-
   state: {
     items: [],
   },
@@ -24,32 +23,31 @@ export const userList = {
   },
 
   mutations: {
-    setItems(state: UserListState, items: User[]) {
+    items(state: UserListState, items: User[]) {
       state.items = items;
     }
   },
 
   actions: {
-    async getAll(context: UserContext): Promise<User[]> {
+    async itemsGet(context: UserContext): Promise<User[]> {
       if (context.state.items.length) {
         return context.state.items;
       }
       const items = await userApi.index();
-      cSetItems(context, items);
+      sUserItems(context, items);
       return context.state.items;
     },
   },
 };
 
-const { commit, read, dispatch } =
-  getStoreAccessors<UserListState, RootState>('userList');
+const { commit, read, dispatch } = getStoreAccessors<UserListState, RootState>('userList');
 
 const getters = userList.getters;
-export const rItemById = read(getters.itemById);
-export const rItemsByRole = read(getters.itemsByRole);
+export const gUserItemById = read(getters.itemById);
+export const gUserListByRole = read(getters.itemsByRole);
 
 const actions = userList.actions;
-export const dGetAll = dispatch(actions.getAll);
+export const dUserItemsGet = dispatch(actions.itemsGet);
 
 const mutations = userList.mutations;
-export const cSetItems = commit(mutations.setItems);
+export const sUserItems = commit(mutations.items);

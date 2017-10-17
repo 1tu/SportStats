@@ -10,11 +10,10 @@ export const routes: { path: string, componentName: string, title: string }[] = 
   // { path: '/profile', title: 'Profile' },
   { path: '/sport', componentName: 'SsSport', title: 'Sport' },
   // { path: '/statsTemplateIndividual', title: 'Stats template individual' },
-  { path: '/sportsmanList', componentName: 'SsSportsmanList', title: 'Sportsman list' },
-  { path: '/sportsmanList', componentName: 'SsSportsman', title: 'Sportsman' },
+  { path: '/sportsman', componentName: 'SsSportsmanList', title: 'Sportsman list' },
   // { path: '/trainer', title: 'Trainer' },
   // { path: '/organization', title: 'Organization' },
-  { path: '/team', componentName: 'SsTeam', title: 'Team' },
+  { path: '/team', componentName: 'SsTeamList', title: 'Team' },
   // { path: '/propertyIndividual', title: 'Property individual' },
   // { path: '/property', title: 'Property' },
   // { path: '/physicalQuantity', title: 'Physical quantity' },
@@ -24,6 +23,8 @@ export const routes: { path: string, componentName: string, title: string }[] = 
 
 const advencedRoutes = [
   { path: '/user/:id', component: require(`./components/SsUser`).SsUser },
+  { path: '/sportsman/:id', component: require(`./components/SsSportsman`).SsSportsman },
+  { path: '/team/:id', component: require(`./components/SsTeam`).SsTeam },
 ];
 
 export const router = new VueRouter({

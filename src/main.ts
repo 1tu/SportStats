@@ -1,7 +1,9 @@
 import Vue from 'vue';
-import Vuetify from 'vuetify';
+import './api/_interceptor';
+import './charts';
 
 import './stylus/main.styl';
+import Vuetify from 'vuetify';
 Vue.use(Vuetify);
 
 import { i18n } from './i18n';

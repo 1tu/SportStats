@@ -1,7 +1,7 @@
 'use strict'
-const CommonController = require('../CommonController')
+const BaseController = require('../_baseController')
 
-class PermissionController extends CommonController {
+class PermissionController extends BaseController {
 }
 
 module.exports = PermissionController

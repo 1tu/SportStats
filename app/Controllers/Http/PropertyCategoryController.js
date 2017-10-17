@@ -1,7 +1,7 @@
 'use strict'
-const CommonController = require('../CommonController')
+const BaseController = require('../_baseController')
 
-class PropertyCategoryController extends CommonController {
+class PropertyCategoryController extends BaseController {
 }
 
 module.exports = PropertyCategoryController

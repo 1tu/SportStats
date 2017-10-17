@@ -1,5 +1,5 @@
 'use strict'
-// import { TableBuilder } from 'knex';
+// import Knex from 'knex';
 
 const Schema = use('Schema')
 

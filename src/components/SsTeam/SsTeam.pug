@@ -1,1 +1,54 @@
-div SsAaaaaa
+v-container(grid-list-md text-xs-center)
+  v-layout(row wrap)
+    template(v-if='item')
+      v-flex(xs12)
+        h3 {{ item.name }}
+
+      v-flex(xs4)
+        v-select(:items="propertyList" overflow label="Select property" v-model='selectedProperty')
+
+      v-flex(xs3 offset-xs1)
+        v-menu(
+          lazy :close-on-content-click="false"
+          v-model="filterData.showDateStart"
+          transition="scale-transition"
+          offset-y full-width
+          :nudge-right="40"
+          max-width="290px"
+          min-width="290px"
+        )
+          v-text-field(slot="activator" label="Pick start date" @change='onFilterChange'
+            v-model="filter.range.start" prepend-icon="event" readonly )
+          v-date-picker(v-model="filter.range.start" no-title scrollable actions :allowed-dates="{ min:filterData.rangeLimits.start, max: filter.range.end }")
+            template(scope="{ save, cancel }")
+              v-card-actions
+                v-spacer
+                v-btn(flat color="primary" @click="cancel") Cancel
+                v-btn(flat color="primary" @click="save") OK
+
+      v-flex(xs3 offset-xs1)
+        v-menu(
+          lazy :close-on-content-click="false"
+          v-model="filterData.showDateEnd"
+          transition="scale-transition"
+          offset-y full-width
+          :nudge-right="40"
+          max-width="290px"
+          min-width="290px"
+        )
+          v-text-field(slot="activator" label="Pick end date" @change='onFilterChange'
+            v-model="filter.range.end" prepend-icon="event" readonly)
+          v-date-picker(v-model="filter.range.end" no-title scrollable actions :allowed-dates="{ min: filter.range.start, max: filterData.rangeLimits.end }")
+            template(scope="{ save, cancel }")
+              v-card-actions
+                v-spacer
+                v-btn(flat color="primary" @click="cancel") Cancel
+                v-btn(flat color="primary" @click="save") OK
+
+      v-flex(xs12)
+        highcharts(:options='chartOptions' style='height:500px')
+
+      v-flex.mt-5(xs12)
+        h4 Average growth: {{ growingByTeam }}
+      v-flex.mt-3(xs12)
+        highcharts(:options='chartGrowingOptions' style='height:500px')

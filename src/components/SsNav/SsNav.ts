@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import { store } from '../../store/index';
-import { Input } from '../../decorators';
 import { SsUser } from '../index';
 import { routes } from '../../router';
 

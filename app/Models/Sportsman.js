@@ -6,9 +6,12 @@ class Sportsman extends Model {
   static boot() {
     super.boot()
 
-    this.addHook('beforeSave', 'Sportsman.checkTrainer')
+    this.addHook('beforeSave', 'SportsmanHooks.checkTrainer')
+    this.addHook('afterCreate', 'SharedHooks.createProfile')
+  }
 
-    this.addHook('afterCreate', 'Shared.createProfile')
+  static get hidden() {
+    return ['profile_id', 'user_id', 'sport_id', 'trainer_id', 'team_id']
   }
 
   user() {
@@ -25,6 +28,10 @@ class Sportsman extends Model {
 
   trainer() {
     return this.belongsTo('App/Models/Trainer')
+  }
+
+  measurements() {
+    return this.hasMany('App/Models/PropertyIndividual')
   }
 }
 

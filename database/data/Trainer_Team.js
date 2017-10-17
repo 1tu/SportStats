@@ -1,9 +1,5 @@
-// import { Trainer } from '../../@Types/Models'
-/**
- * @type {Trainer[]}
- */
-const Trainers = [
-  { sport_id: 1 }, { sport_id: 2 }, { sport_id: 3 },
+const Trainer_Team = [
+  { trainer_id: 1, team_id: 1 }, { trainer_id: 2, team_id: 2 }, { trainer_id: 3, team_id: 3 }
 ]
 
-module.exports = Trainers
+module.exports = Trainer_Team

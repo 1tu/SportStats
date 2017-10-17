@@ -7,6 +7,13 @@ class PropertyIndividual extends Model {
   // 1) что замеренное свойство входит в выбранный шаблон спорта
   // 2) что спорт у шаблона и спортсмена совпадает (тренер может быть и из другого спорта)
 
+  // TODO: потом убрать, нужно для заполнения из seed
+  static get createdAtColumn() { return null }
+
+  static get hidden() {
+    return ['property_id', 'sportsman_id', 'template_id', 'trainer_id']
+  }
+
   property() {
     return this.belongsTo('App/Models/Property')
   }

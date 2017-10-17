@@ -1,7 +1,7 @@
 'use strict'
-const CommonController = require('../CommonController')
+const BaseController = require('../_baseController')
 
-class UserController extends CommonController {
+class UserController extends BaseController {
   async login({ request, auth }) {
     const { email, password } = request.all()
     await auth.remember(true).attempt(email, password)

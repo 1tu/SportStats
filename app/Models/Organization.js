@@ -3,6 +3,10 @@
 const Model = use('Model')
 
 class Organization extends Model {
+  static get hidden() {
+    return ['owner_id', 'logo_id']
+  }
+
   owner() {
     return this.belongsTo('App/Models/User', 'owner_id')
   }

@@ -1,1 +1,6 @@
-div SsAaaaaa
+v-data-table.elevation-1(:headers="headers" :items="items" hide-actions)
+  template(slot="items" scope="props")
+    td {{ props.item.id }}
+    td.text-xs-right {{ props.item.position }}
+    td.text-xs-right
+      v-btn(@click='$router.push("/sportsman/" + props.item.id)') show

@@ -2,8 +2,11 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import { State } from './';
 import { getStoreAccessors } from 'vuex-typescript';
-import { userList, UserListState } from './modules/userList';
-import { user, UserState } from './modules/user';
+import {
+  userList, UserListState, user, UserState, SportState, sport,
+  sportsmanList, SportsmanListState, sportsman, SportsmanState,
+  teamList, team, TeamListState, TeamState,
+} from './modules';
 
 Vue.use(Vuex);
 
@@ -20,8 +23,10 @@ export const store = new Vuex.Store<State>({
   strict: process.env.NODE_ENV !== 'production',
 });
 
-store.registerModule<UserListState>('userList', userList);
 store.registerModule<UserState>('user', user);
-
-// const { commit, read, dispatch } =
-//   getStoreAccessors<BasketState>('basket');
+store.registerModule<UserListState>('userList', userList);
+store.registerModule<SportState>('sport', sport);
+store.registerModule<SportsmanState>('sportsman', sportsman);
+store.registerModule<SportsmanListState>('sportsmanList', sportsmanList);
+store.registerModule<TeamState>('team', team);
+store.registerModule<TeamListState>('teamList', teamList);

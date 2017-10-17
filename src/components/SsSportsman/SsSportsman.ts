@@ -1,23 +1,43 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
-// import { readProductNames, readTotalAmountWithoutDiscount, dispatchUpdateTotalAmount } from './store';
+import { Sportsman } from '../../../@Types/index';
+import { dSportsmanGet, gSportsmanSeriesFromPropertyIndividualList } from '../../store/modules/index';
+import _ from 'lodash';
+import Highstock, { ChartObject } from 'highcharts/highstock';
 
 @Component({
-  template: require('./SsSportsman.pug')
+  template: require('./SsSportsman.pug'),
 })
 export class SsSportsman extends Vue {
-  item;
+  item: Sportsman = null;
+  chartOptions: Highstock.Options = {
+    title: { text: 'График измерений' },
+    chart: {
+      type: 'spline'
+    },
+    xAxis: {
+      type: 'datetime',
+      title: {
+        text: 'Date'
+      }
+    },
+    tooltip: {
+      headerFormat: '<b>{series.name}</b><br>',
+      pointFormat: '{point.x:%e.%m.%Y}<br>{point.y:.2f}'
+    },
+    plotOptions: {
+      spline: {
+        marker: {
+          enabled: true
+        }
+      }
+    },
+    series: []
+  };
 
-  // get productNames() {
-  //   return readProductNames(this.$store);
-  // }
-
-  // get totalAmountWithoutDiscount() {
-  //   return readTotalAmountWithoutDiscount(this.$store);
-  // }
-
-  // updateTotal() {
-  //   dispatchUpdateTotalAmount(this.$store, 10);
-  // }
+  async mounted() {
+    this.item = await dSportsmanGet(this.$store, parseInt(this.$route.params.id));
+    this.chartOptions.series = gSportsmanSeriesFromPropertyIndividualList(this.$store);
+  }
 }
 

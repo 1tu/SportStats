@@ -1,14 +1,13 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import { User } from '../../../@Types/Models';
-import { dGetAll } from '../../store/modules/userList/index';
+import { User } from '../../../@Types';
+import { dUserItemsGet } from '../../store/modules/userList/index';
 
 @Component({
   template: require('./SsUserList.pug'),
-
 })
 export class SsUserList extends Vue {
-  test = 'tt';
+  items: User[] = [];
   headers: { text: string, value?: keyof User, align?: string, sortable?: boolean }[] = [
     {
       text: 'Id',
@@ -19,13 +18,12 @@ export class SsUserList extends Vue {
     { text: 'Email', value: 'email' },
     { text: 'Username', value: 'username' },
     { text: 'Role', value: 'role_id' },
-    { text: 'Actions' }
+    { text: 'Actions', sortable: false }
   ];
 
-  items: User[] = [];
 
   async mounted() {
-    this.items = await dGetAll(this.$store);
+    this.items = await dUserItemsGet(this.$store);
   }
 }
 
