@@ -9,12 +9,14 @@ Vue.use(Vuetify);
 import { i18n } from './i18n';
 import { router } from './router';
 import { store } from './store';
+import filters from './filters';
 import { SsApp } from './components/SsApp';
 
-new Vue({
+export const app = new Vue({
   i18n,
   router,
   store,
+  filters,
   el: '#app',
   render: h => h(SsApp)
 });

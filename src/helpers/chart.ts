@@ -1,32 +1,33 @@
-import _ from 'lodash';
+import { round, groupBy, transform, flatten, mapValues } from 'lodash-es';
 import moment from 'moment';
-import { SsModel, Property, PropertyIndividual, Sportsman, DateRange } from '../../../@Types/index';
+import { SsModel, Property, PropertyIndividual, Sportsman, DateRange } from '../../@Types/index';
 import { IndividualSeriesOptions } from 'highcharts';
 
 export function seriesFromPropertyIndividualList(arr: PropertyIndividual[], groupProp?: string): IndividualSeriesOptions[] {
-  return _(arr).groupBy(groupProp || 'property.name').transform((res, val: PropertyIndividual[], key: string) => {
-    res.push({
-      name: key,
-      data: val.map(prop => [new Date(prop.created_at).getTime(), parseFloat(prop.value as any)]).sort((a, b) => a[0] > b[0] ? 1 : -1)
-    });
-  }, []).value();
+  return transform(groupBy(arr, groupProp || 'property.name'),
+    (res, val: PropertyIndividual[], key: string) => {
+      res.push({
+        name: key,
+        data: val.map(prop => [new Date(prop.created_at).getTime(), parseFloat(prop.value as any)]).sort((a, b) => a[0] > b[0] ? 1 : -1)
+      });
+    }, []);
 }
 
 
 export function seriesListFromSportsman(arr: Sportsman[]): { [prop: string]: IndividualSeriesOptions[] } {
-  return _(arr)
-    .map(item => [...item.measurements.map(
-      m => ({ ...m, sportsman_id: item.id })
-    )])
-    .flatten().groupBy('property.name')
-    .mapValues(propList => seriesFromPropertyIndividualList((propList as any), 'sportsman_id')).value();
+  return mapValues(
+    groupBy(
+      flatten(arr.map(item => [...item.measurements.map(
+        m => ({ ...m, sportsman_id: item.id })
+      )])),
+      'property.name'),
+    propList => seriesFromPropertyIndividualList((propList as any), 'sportsman_id'));
 }
 
 
 export function seriesGrowingFromSeries(series: IndividualSeriesOptions[], propertyName: string): IndividualSeriesOptions[] {
-  const data = _(series).filter(item => item.data.length > 1).map(item =>
-    [item.name, _.round(item.data[item.data.length - 1][1] - item.data[0][1], 2)]
-  ).value();
+  const data = series.filter(item => item.data.length > 1)
+    .map(item => [item.name, round(item.data[item.data.length - 1][1] - item.data[0][1], 2)]);
 
   return [{ name: propertyName + ' growing', data: (data as any) }];
 }

@@ -18,6 +18,10 @@ class ImageSchema extends Schema {
         table.timestamps()
       })
 
+    this.alter('profiles', (table) => {
+      table.integer('image_id').unsigned().references('id').inTable('images')
+    })
+
     this.create('organizations',
       /**
        * @param {TableBuilder} table
@@ -88,6 +92,7 @@ class ImageSchema extends Schema {
     this.drop('teams')
     this.alter('users', table => { table.dropForeign('organization_id') })
     this.drop('organizations')
+    this.alter('profiles', table => { table.dropForeign('image_id') })
     this.drop('images')
   }
 }

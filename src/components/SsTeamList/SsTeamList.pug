@@ -1,7 +1,11 @@
-v-data-table.elevation-1(:headers="headers" :items="items" hide-actions)
-  template(slot="items" scope="props")
-    td {{ props.item.id }}
-    td.text-xs-right {{ props.item.name }}
-    td.text-xs-right {{ props.item.name_full }}
-    td.text-xs-right
-      v-btn(@click='$router.push("/team/" + props.item.id)') show
+v-container(text-xs-center)
+  v-layout(row wrap)
+    v-data-table.elevation-1(:headers="headers" :items="items" hide-actions)
+      template(slot="items" scope="props")
+        td(v-for='header in headers'
+          :class='{"text-xs-right": header.value !== "id"}') {{ props.item[header.value] }}
+          template(v-if='header.actionList' v-for='action in header.actionList')
+            v-btn(@click='action.onClick(props.item.id)') {{ action.name }}
+
+  v-btn(fab bottom right color='pink' dark fixed)
+    v-icon add

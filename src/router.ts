@@ -15,6 +15,7 @@ export const routes: { path: string, componentName: string, title: string }[] = 
   // { path: '/organization', title: 'Organization' },
   { path: '/team', componentName: 'SsTeamList', title: 'Team' },
   // { path: '/propertyIndividual', title: 'Property individual' },
+  { path: '/property', componentName: 'SsPropertyList', title: 'Property list' },
   // { path: '/property', title: 'Property' },
   // { path: '/physicalQuantity', title: 'Physical quantity' },
   // { path: '/propertyCategory', title: 'Property category' },

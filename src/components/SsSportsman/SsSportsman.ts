@@ -1,13 +1,10 @@
 import Vue from 'vue';
-import Component from 'vue-class-component';
+import { Component } from 'vue-property-decorator';
 import { Sportsman } from '../../../@Types/index';
 import { dSportsmanGet, gSportsmanSeriesFromPropertyIndividualList } from '../../store/modules/index';
-import _ from 'lodash';
 import Highstock, { ChartObject } from 'highcharts/highstock';
 
-@Component({
-  template: require('./SsSportsman.pug'),
-})
+@Component({ template: require('./SsSportsman.pug'), })
 export class SsSportsman extends Vue {
   item: Sportsman = null;
   chartOptions: Highstock.Options = {

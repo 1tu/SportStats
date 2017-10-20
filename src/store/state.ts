@@ -1,6 +1,6 @@
 import {
   UserListState, UserState, SportsmanState, SportsmanListState, SportState,
-  TeamListState, TeamState,
+  TeamListState, TeamState, PropertyListState,
 } from './modules';
 
 export interface State {
@@ -13,4 +13,5 @@ export interface State {
   sportsman?: SportsmanState;
   teamList?: TeamListState;
   team?: TeamState;
+  propertyList?: PropertyListState;
 }

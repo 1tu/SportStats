@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import Component from 'vue-class-component';
+import { Component } from 'vue-property-decorator';
 import { store } from '../../store/index';
 import { SsUser } from '../index';
 import { routes } from '../../router';

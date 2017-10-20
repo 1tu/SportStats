@@ -1,11 +1,11 @@
 import { ActionContext, Store, Module } from 'vuex';
 import { TeamState } from './TeamStoreState';
-import _ from 'lodash';
+import { min, max, flatten } from 'lodash-es';
 import { getStoreAccessors } from 'vuex-typescript';
 import { State as RootState } from '../../index';
 import { Team, PropertyIndividual, DateRange } from '../../../../@Types';
 import { teamApi } from '../../../api/teamApi';
-import { seriesListFromSportsman, seriesGrowingFromSeries, seriesByDateRange } from '../../helpers/index';
+import { seriesListFromSportsman, seriesGrowingFromSeries, seriesByDateRange } from '../../../helpers/index';
 
 type TeamContext = ActionContext<TeamState, RootState>;
 
@@ -30,11 +30,11 @@ export const team = {
         seriesGrowingFromSeries(getters.seriesByProperty(property, datesLimit), property);
     },
     filterDateLimits(state: TeamState): DateRange {
-      const datesArr = _(state.item.sportsmen)
-        .map(sportsman => sportsman.measurements).flatten()
-        .map((pi: PropertyIndividual) => new Date(pi.created_at).getTime()).value();
+      const datesArr = flatten(state.item.sportsmen.map(sportsman => sportsman.measurements))
+        .map((pi: PropertyIndividual) => new Date(pi.created_at).getTime());
 
-      return { start: new Date(_.min(datesArr)), end: new Date(_.max(datesArr)) };
+      if (!datesArr.length) return { start: new Date(), end: new Date() };
+      return { start: new Date(min(datesArr)), end: new Date(max(datesArr)) };
     }
   },
 

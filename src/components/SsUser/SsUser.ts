@@ -1,8 +1,7 @@
 import Vue from 'vue';
-import Component from 'vue-class-component';
+import { Component } from 'vue-property-decorator';
 import { dUserGet } from '../../store/modules/user';
 import { User } from '../../../@Types';
-// import { readProductNames, readTotalAmountWithoutDiscount, dispatchUpdateTotalAmount } from './store';
 
 @Component({
   template: require('./SsUser.pug')

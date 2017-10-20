@@ -1,4 +1,4 @@
-v-container(grid-list-md text-xs-center)
+v-container(text-xs-center)
   v-layout(row wrap)
     template(v-if='item')
       v-flex(xs12)
@@ -12,14 +12,12 @@ v-container(grid-list-md text-xs-center)
           lazy :close-on-content-click="false"
           v-model="filterData.showDateStart"
           transition="scale-transition"
-          offset-y full-width
-          :nudge-right="40"
-          max-width="290px"
-          min-width="290px"
-        )
+          offset-y :nudge-right="40"
+         )
           v-text-field(slot="activator" label="Pick start date" @change='onFilterChange'
-            v-model="filter.range.start" prepend-icon="event" readonly )
-          v-date-picker(v-model="filter.range.start" no-title scrollable actions :allowed-dates="{ min:filterData.rangeLimits.start, max: filter.range.end }")
+            v-model="filter.range.start" prepend-icon="event" readonly)
+          v-date-picker(v-model="filter.range.start" no-title scrollable actions
+            :allowed-dates="{ min:filterData.rangeLimits.start, max: filter.range.end }")
             template(scope="{ save, cancel }")
               v-card-actions
                 v-spacer
@@ -28,17 +26,13 @@ v-container(grid-list-md text-xs-center)
 
       v-flex(xs3 offset-xs1)
         v-menu(
-          lazy :close-on-content-click="false"
-          v-model="filterData.showDateEnd"
-          transition="scale-transition"
-          offset-y full-width
-          :nudge-right="40"
-          max-width="290px"
-          min-width="290px"
+          lazy :close-on-content-click="false" v-model="filterData.showDateEnd"
+          transition="scale-transition" offset-y :nudge-right="40"
         )
           v-text-field(slot="activator" label="Pick end date" @change='onFilterChange'
             v-model="filter.range.end" prepend-icon="event" readonly)
-          v-date-picker(v-model="filter.range.end" no-title scrollable actions :allowed-dates="{ min: filter.range.start, max: filterData.rangeLimits.end }")
+          v-date-picker(v-model="filter.range.end" no-title scrollable actions
+            :allowed-dates="{ min: filter.range.start, max: filterData.rangeLimits.end }")
             template(scope="{ save, cancel }")
               v-card-actions
                 v-spacer
@@ -52,3 +46,6 @@ v-container(grid-list-md text-xs-center)
         h4 Average growth: {{ growingByTeam }}
       v-flex.mt-3(xs12)
         highcharts(:options='chartGrowingOptions' style='height:500px')
+
+  v-btn(fab bottom right color='pink' dark fixed)
+    v-icon add

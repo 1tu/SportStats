@@ -1,25 +1,18 @@
 import Vue from 'vue';
-import Component from 'vue-class-component';
+import { Component } from 'vue-property-decorator';
 import { User } from '../../../@Types';
 import { dUserItemsGet } from '../../store/modules/userList/index';
+import { makeHeaders } from '../../helpers/index';
+import { app } from '../../main';
 
-@Component({
-  template: require('./SsUserList.pug'),
-})
+@Component({ template: require('./SsUserList.pug') })
 export class SsUserList extends Vue {
   items: User[] = [];
-  headers: { text: string, value?: keyof User, align?: string, sortable?: boolean }[] = [
-    {
-      text: 'Id',
-      align: 'left',
-      sortable: false,
-      value: 'id'
-    },
-    { text: 'Email', value: 'email' },
-    { text: 'Username', value: 'username' },
-    { text: 'Role', value: 'role_id' },
-    { text: 'Actions', sortable: false }
-  ];
+  headers = makeHeaders<User>(User, {
+    actionList: [
+      { name: 'show', onClick: (id: number) => app.$router.push(`/user/${id}`) }
+    ]
+  });
 
 
   async mounted() {

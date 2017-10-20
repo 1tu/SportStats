@@ -1,11 +1,10 @@
 import { ActionContext, Store, Module } from 'vuex';
-import _ from 'lodash';
 import { SportsmanState } from './SportsmanStoreState';
 import { getStoreAccessors } from 'vuex-typescript';
 import { State as RootState } from '../../index';
 import { Sportsman } from '../../../../@Types';
 import { sportsmanApi } from '../../../api/sportsmanApi';
-import { seriesFromPropertyIndividualList } from '../../helpers/index';
+import { seriesFromPropertyIndividualList } from '../../../helpers/index';
 import { IndividualSeriesOptions } from 'highcharts';
 
 type SportsmanContext = ActionContext<SportsmanState, RootState>;

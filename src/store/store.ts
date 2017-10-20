@@ -5,7 +5,7 @@ import { getStoreAccessors } from 'vuex-typescript';
 import {
   userList, UserListState, user, UserState, SportState, sport,
   sportsmanList, SportsmanListState, sportsman, SportsmanState,
-  teamList, team, TeamListState, TeamState,
+  teamList, team, TeamListState, TeamState, PropertyListState, propertyList,
 } from './modules';
 
 Vue.use(Vuex);
@@ -30,3 +30,4 @@ store.registerModule<SportsmanState>('sportsman', sportsman);
 store.registerModule<SportsmanListState>('sportsmanList', sportsmanList);
 store.registerModule<TeamState>('team', team);
 store.registerModule<TeamListState>('teamList', teamList);
+store.registerModule<PropertyListState>('propertyList', propertyList);

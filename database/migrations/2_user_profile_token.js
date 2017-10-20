@@ -18,7 +18,6 @@ class UserSchema extends Schema {
         table.string('city', 40)
         table.string('country', 40)
         table.string('phone', 20)
-        table.string('photo', 40)
         table.timestamps()
       })
 

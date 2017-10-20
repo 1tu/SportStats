@@ -24,6 +24,8 @@ class PropertyIndividualSchema extends Schema {
       (table) => {
         table.increments()
         table.integer('position').notNullable().unsigned()
+        table.date('career_began_at')
+        table.date('career_ended_at')
         table.integer('profile_id').unsigned().references('id').inTable('profiles')
         table.integer('user_id').unsigned().references('id').inTable('users')
         table.integer('trainer_id').unsigned().references('id').inTable('trainers')
