@@ -1,11 +1,12 @@
 v-container(text-xs-center)
   v-layout(row wrap)
-    v-data-table.elevation-1(:headers="headers" :items="items" hide-actions)
-      template(slot="items" scope="props")
-        td(v-for='header in headers'
-          :class='header.value === "id"? "text-xs-left" : "text-xs-right"') {{ props.item[header.value] }}
-          template(v-if='header.actionList' v-for='action in header.actionList')
-            v-btn(@click='action.onClick(props.item.id)') {{ action.name }}
+    v-flex(xs12)
+      v-data-table.elevation-1(:headers="headers" :items="items" hide-actions)
+        template(slot="items" slot-scope="props")
+          td(v-for='header in headers'
+            :class='header.value === "id"? "text-xs-left" : "text-xs-right"') {{ props.item[header.value] }}
+            template(v-if='header.actionList' v-for='action in header.actionList')
+              v-btn(@click='action.onClick(props.item.id)') {{ action.name }}
 
   v-btn(fab bottom right color='pink' dark fixed)
     v-icon add

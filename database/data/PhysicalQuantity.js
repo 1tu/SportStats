@@ -1,4 +1,4 @@
-// import { PhysicalQuantity } from '../../@Types/Models'
+// import { PhysicalQuantity } from '../../@types/Models'
 /**
  * @type {PhysicalQuantity[]}
  */

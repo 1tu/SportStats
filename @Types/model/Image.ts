@@ -14,3 +14,7 @@ export class Image extends SsModel {
   author: User;
   author_id: number;
 }
+
+class ImageModel {
+  // url
+}

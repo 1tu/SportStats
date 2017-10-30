@@ -1,4 +1,4 @@
-// import { Role } from '../../@Types/Models'
+// import { Role } from '../../@types/Models'
 /**
  * @type {Role[]}
  */

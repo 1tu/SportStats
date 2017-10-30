@@ -10,15 +10,15 @@ v-container(text-xs-center)
       v-flex(xs3 offset-xs1)
         v-menu(
           lazy :close-on-content-click="false"
-          v-model="filterData.showDateStart"
+          v-model="filter.showDateStart"
           transition="scale-transition"
           offset-y :nudge-right="40"
          )
           v-text-field(slot="activator" label="Pick start date" @change='onFilterChange'
             v-model="filter.range.start" prepend-icon="event" readonly)
           v-date-picker(v-model="filter.range.start" no-title scrollable actions
-            :allowed-dates="{ min:filterData.rangeLimits.start, max: filter.range.end }")
-            template(scope="{ save, cancel }")
+            :allowed-dates="{ min:filter.rangeLimits.start, max: filter.range.end }")
+            template(slot-scope="{ save, cancel }")
               v-card-actions
                 v-spacer
                 v-btn(flat color="primary" @click="cancel") Cancel
@@ -26,14 +26,14 @@ v-container(text-xs-center)
 
       v-flex(xs3 offset-xs1)
         v-menu(
-          lazy :close-on-content-click="false" v-model="filterData.showDateEnd"
+          lazy :close-on-content-click="false" v-model="filter.showDateEnd"
           transition="scale-transition" offset-y :nudge-right="40"
         )
           v-text-field(slot="activator" label="Pick end date" @change='onFilterChange'
             v-model="filter.range.end" prepend-icon="event" readonly)
           v-date-picker(v-model="filter.range.end" no-title scrollable actions
-            :allowed-dates="{ min: filter.range.start, max: filterData.rangeLimits.end }")
-            template(scope="{ save, cancel }")
+            :allowed-dates="{ min: filter.range.start, max: filter.rangeLimits.end }")
+            template(slot-scope="{ save, cancel }")
               v-card-actions
                 v-spacer
                 v-btn(flat color="primary" @click="cancel") Cancel
@@ -47,5 +47,5 @@ v-container(text-xs-center)
       v-flex.mt-3(xs12)
         highcharts(:options='chartGrowingOptions' style='height:500px')
 
-  v-btn(fab bottom right color='pink' dark fixed)
+  v-btn(fab fixed bottom right color='pink' dark)
     v-icon add

@@ -1,4 +1,4 @@
-// import { Team } from '../../@Types'
+// import { Team } from '../../@types'
 /**
  * @type {Team[]}
  */

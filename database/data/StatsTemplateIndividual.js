@@ -1,4 +1,4 @@
-// import { StatsTemplateIndividual } from '../../@Types/Models'
+// import { StatsTemplateIndividual } from '../../@types/Models'
 /**
  * @type {StatsTemplateIndividual[]}
  */

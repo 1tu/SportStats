@@ -1,49 +1,50 @@
-import { ActionContext, Store, Module } from 'vuex';
-import { TeamListState } from './TeamListStoreState';
-import { getStoreAccessors } from 'vuex-typescript';
-import { State as RootState } from '../../index';
-import { Team } from '../../../../@Types';
+import Vuex from 'vuex';
+import { State as vState, Getter as vGetter, Mutation as vMutation, Action as vAction, namespace } from 'vuex-class';
+import { getter, mutation, action, decorator, keymirror } from '../../vuexTypes';
+import { TeamListStoreState } from './TeamListStoreState';
+import { Team } from '../../../../@types';
 import { teamApi } from '../../../api/teamApi';
 
-type TeamContext = ActionContext<TeamListState, RootState>;
-
-export const teamList = {
-  namespaced: true,
-  state: {
-    items: [],
-  },
-
-  getters: {
-    itemById(state: TeamListState) {
-      return (id: number) => state.items.filter((item) => item.id === id)[0];
-    }
-  },
-
-  mutations: {
-    items(state: TeamListState, items: Team[]) {
-      state.items = items;
-    }
-  },
-
-  actions: {
-    async itemsGet(context: TeamContext): Promise<Team[]> {
-      if (context.state.items.length) {
-        return context.state.items;
-      }
-      const items = await teamApi.index();
-      sTeamItems(context, items);
-      return context.state.items;
-    },
-  },
+const storeName = 'teamList';
+const state: TeamListStoreState = {
+  items: []
 };
 
-const { commit, read, dispatch } = getStoreAccessors<TeamListState, RootState>('teamList');
+const getters = getter(state, {
+  itemById(state) {
+    return (id: number) => state.items.filter((item) => item.id === id)[0];
+  }
+});
 
-const getters = teamList.getters;
-export const gTeamItemById = read(getters.itemById);
+const mutations = mutation(state, {
+  items(state, items: Team[]) {
+    state.items = items;
+  }
+});
 
-const actions = teamList.actions;
-export const dTeamItemsGet = dispatch(actions.itemsGet);
+const actions = action(state, {
+  async itemsGet({ commit, state, rootState }): Promise<Team[]> {
+    if (state.items.length) { return state.items; }
+    const items = await teamApi.index();
+    commit(types.mutation.items, items);
+    return state.items;
+  }
+});
 
-const mutations = teamList.mutations;
-export const sTeamItems = commit(mutations.items);
+const types = {
+  state: keymirror(state),
+  getter: keymirror(getters),
+  mutation: keymirror(mutations),
+  action: keymirror(actions)
+};
+
+export const teamList = {
+  namespaced: true, state, getters, mutations, actions
+};
+
+export const TeamListTypes = types;
+export const TeamListState = decorator(namespace(storeName, vState), types.state);
+export const TeamListGetter = decorator(namespace(storeName, vGetter), types.getter);
+export const TeamListMutation = decorator(namespace(storeName, vMutation), types.mutation);
+export const TeamListAction = decorator(namespace(storeName, vAction), types.action);
+

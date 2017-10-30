@@ -8,3 +8,11 @@ export class SsModel {
   created_at: Date;
   updated_at: Date;
 }
+
+type ModelTypes = 'string' | 'number' | 'boolean' | 'entity' | 'array';
+
+export interface IModel {
+  type: ModelTypes;
+  validators: Array<(value: any, ...opts) => boolean>;
+
+}

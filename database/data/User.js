@@ -1,4 +1,4 @@
-// import { User } from '../../@Types/Models'
+// import { User } from '../../@types/Models'
 /**
  * @type {User[]}
  */

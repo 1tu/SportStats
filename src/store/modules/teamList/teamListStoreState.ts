@@ -1,5 +1,5 @@
-import { Team } from '../../../../@Types';
+import { Team } from '../../../../@types';
 
-export interface TeamListState {
+export interface TeamListStoreState {
   items: Team[];
 }

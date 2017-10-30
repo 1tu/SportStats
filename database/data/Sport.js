@@ -1,4 +1,4 @@
-// import { Sport } from '../../@Types/Models'
+// import { Sport } from '../../@types/Models'
 /**
  * @type {Sport[]}
  */

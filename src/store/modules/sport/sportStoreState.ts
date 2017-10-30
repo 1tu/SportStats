@@ -1,5 +1,5 @@
-import { Sport } from '../../../../@Types';
+import { Sport } from '../../../../@types';
 
-export interface SportState {
+export interface SportStoreState {
   item: Sport;
 }

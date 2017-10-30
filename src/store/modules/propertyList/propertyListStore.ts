@@ -1,49 +1,50 @@
-import { ActionContext, Store, Module } from 'vuex';
-import { PropertyListState } from './PropertyListStoreState';
-import { getStoreAccessors } from 'vuex-typescript';
-import { State as RootState } from '../../index';
-import { Property } from '../../../../@Types';
+import Vuex from 'vuex';
+import { State as vState, Getter as vGetter, Mutation as vMutation, Action as vAction, namespace } from 'vuex-class';
+import { getter, mutation, action, decorator, keymirror } from '../../vuexTypes';
+import { PropertyListStoreState } from './PropertyListStoreState';
+import { Property } from '../../../../@types';
 import { propertyApi } from '../../../api/propertyApi';
 
-type PropertyContext = ActionContext<PropertyListState, RootState>;
-
-export const propertyList = {
-  namespaced: true,
-  state: {
-    items: [],
-  },
-
-  getters: {
-    itemById(state: PropertyListState) {
-      return (id: number) => state.items.filter((item) => item.id === id)[0];
-    }
-  },
-
-  mutations: {
-    items(state: PropertyListState, items: Property[]) {
-      state.items = items;
-    }
-  },
-
-  actions: {
-    async itemsGet(context: PropertyContext): Promise<Property[]> {
-      if (context.state.items.length) {
-        return context.state.items;
-      }
-      const items = await propertyApi.index();
-      sPropertyItems(context, items);
-      return context.state.items;
-    },
-  },
+const storeName = 'propertyList';
+const state: PropertyListStoreState = {
+  items: []
 };
 
-const { commit, read, dispatch } = getStoreAccessors<PropertyListState, RootState>('propertyList');
+const getters = getter(state, {
+  itemById(state) {
+    return (id: number) => state.items.filter((item) => item.id === id)[0];
+  }
+});
 
-const getters = propertyList.getters;
-export const gPropertyItemById = read(getters.itemById);
+const mutations = mutation(state, {
+  items(state, items: Property[]) {
+    state.items = items;
+  }
+});
 
-const actions = propertyList.actions;
-export const dPropertyItemsGet = dispatch(actions.itemsGet);
+const actions = action(state, {
+  async itemsGet({ commit, state, rootState }): Promise<Property[]> {
+    if (state.items.length) { return state.items; }
+    const items = await propertyApi.index();
+    commit(types.mutation.items, items);
+    return state.items;
+  }
+});
 
-const mutations = propertyList.mutations;
-export const sPropertyItems = commit(mutations.items);
+const types = {
+  state: keymirror(state),
+  getter: keymirror(getters),
+  mutation: keymirror(mutations),
+  action: keymirror(actions)
+};
+
+export const propertyList = {
+  namespaced: true, state, getters, mutations, actions
+};
+
+export const PropertyListTypes = types;
+export const PropertyListState = decorator(namespace(storeName, vState), types.state);
+export const PropertyListGetter = decorator(namespace(storeName, vGetter), types.getter);
+export const PropertyListMutation = decorator(namespace(storeName, vMutation), types.mutation);
+export const PropertyListAction = decorator(namespace(storeName, vAction), types.action);
+

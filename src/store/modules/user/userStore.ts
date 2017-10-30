@@ -1,46 +1,43 @@
-import { ActionContext, Store, Module } from 'vuex';
-import { UserState } from './UserStoreState';
-import { getStoreAccessors } from 'vuex-typescript';
-import { State as RootState } from '../../index';
-import { User } from '../../../../@Types';
+import Vuex from 'vuex';
+import { State as vState, Getter as vGetter, Mutation as vMutation, Action as vAction, namespace } from 'vuex-class';
+import { getter, mutation, action, decorator, keymirror } from '../../vuexTypes';
+import { UserStoreState } from './UserStoreState';
+import { User } from '../../../../@types';
 import { userApi } from '../../../api/userApi';
 
-type UserContext = ActionContext<UserState, RootState>;
-
-export const user = {
-  namespaced: true,
-  state: {
-    item: null,
-  },
-
-  getters: {
-    // getItemsByRole(state: UserState, getters, rootState: RootState, rootGetters) {
-    //   return (role_id: number) => state.item.filter((item) => item.role_id === role_id);
-    // },
-  },
-
-  mutations: {
-    item(state: UserState, item: User) {
-      state.item = item;
-    }
-  },
-
-  actions: {
-    async itemGet(context: UserContext, id: number): Promise<User> {
-      let item = context.rootGetters['userList/itemById'](id);
-      if (!item) { item = await userApi.show(id); }
-      sUserItem(context, item);
-      return context.state.item;
-    },
-  },
+const storeName = 'user';
+const state: UserStoreState = {
+  item: null
 };
 
-const { commit, read, dispatch } = getStoreAccessors<UserState, RootState>('user');
+const getters = getter(state, {});
 
-const getters = user.getters;
+const mutations = mutation(state, {
+  item(state: UserStoreState, item: User) {
+    state.item = item;
+  }
+});
 
-const actions = user.actions;
-export const dUserGet = dispatch(actions.itemGet);
+const actions = action(state, {
+  async itemGet({ commit, state }, id: number): Promise<User> {
+    commit(types.mutation.item, await userApi.show(id));
+    return state.item;
+  },
+});
 
-const mutations = user.mutations;
-export const sUserItem = commit(mutations.item);
+const types = {
+  state: keymirror(state),
+  getter: keymirror(getters),
+  mutation: keymirror(mutations),
+  action: keymirror(actions)
+};
+
+export const user = {
+  namespaced: true, state, getters, mutations, actions
+};
+
+export const UserTypes = types;
+export const UserState = decorator(namespace(storeName, vState), types.state);
+export const UserGetter = decorator(namespace(storeName, vGetter), types.getter);
+export const UserMutation = decorator(namespace(storeName, vMutation), types.mutation);
+export const UserAction = decorator(namespace(storeName, vAction), types.action);

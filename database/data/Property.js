@@ -1,4 +1,4 @@
-// import { Property } from '../../@Types/Models'
+// import { Property } from '../../@types/Models'
 /**
  * @type {Property[]}
  */

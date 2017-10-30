@@ -1,9 +1,10 @@
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
-import { User } from '../../../@Types';
-import { dUserItemsGet } from '../../store/modules/userList/index';
+import { User } from '../../../@types';
+// import { dUserItemsGet } from '../../store/modules/userList/index';
 import { makeHeaders } from '../../helpers/index';
 import { app } from '../../main';
+import { UserListAction } from '../../store/modules/index';
 
 @Component({ template: require('./SsUserList.pug') })
 export class SsUserList extends Vue {
@@ -14,9 +15,9 @@ export class SsUserList extends Vue {
     ]
   });
 
-
+  @UserListAction itemsGet;
   async mounted() {
-    this.items = await dUserItemsGet(this.$store);
+    this.items = await this.itemsGet();
   }
 }
 

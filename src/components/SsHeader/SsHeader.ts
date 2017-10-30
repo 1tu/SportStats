@@ -1,15 +1,12 @@
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
-import { store } from '../../store/';
+import { store, Mutation } from '../../store/';
 
 @Component({
   template: require('./SsHeader.pug'),
 })
 export class SsHeader extends Vue {
-
-  toggleNav() {
-    store.commit('TOGGLE_NAV');
-  }
+  @Mutation toggleNav;
 
   switchLang() {
     localStorage.language = this.$i18n.locale === 'en' ? 'ru' : 'en';

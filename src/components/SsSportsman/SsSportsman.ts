@@ -1,12 +1,20 @@
 import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
-import { Sportsman } from '../../../@Types/index';
-import { dSportsmanGet, gSportsmanSeriesFromPropertyIndividualList } from '../../store/modules/index';
+import moment from 'moment';
+import { Component, Watch } from 'vue-property-decorator';
+import { Sportsman } from '../../../@types/index';
 import Highstock, { ChartObject } from 'highcharts/highstock';
+import { SportsmanAction, SportsmanGetter } from '../../store/modules/index';
+import { TableHeader } from '../../helpers/index';
 
 @Component({ template: require('./SsSportsman.pug'), })
 export class SsSportsman extends Vue {
   item: Sportsman = null;
+  filter = {
+    rangeLimits: null,
+    showDateStart: false,
+    showDateEnd: false,
+    range: { start: null, end: null }
+  };
   chartOptions: Highstock.Options = {
     title: { text: 'График измерений' },
     chart: {
@@ -32,9 +40,30 @@ export class SsSportsman extends Vue {
     series: []
   };
 
+  bestMeasurementsHeaders: TableHeader<{ propertyName: string, value: any }>[] = [
+    { text: 'Property name', value: 'propertyName' },
+    { text: 'Value', value: 'value' }
+  ];
+
+  @SportsmanAction itemGet;
+  @SportsmanGetter seriesFromMeasurements;
+  @SportsmanGetter bestMeasurements;
+  @SportsmanGetter('filterDateLimits') sportsmanMeasurementFilterDateLimits;
+
+  @Watch('filter.range.start')
+  @Watch('filter.range.end')
+  onFilterChange() {
+    this.chartOptions.series = this.seriesFromMeasurements(this.filter.range);
+  }
+
   async mounted() {
-    this.item = await dSportsmanGet(this.$store, parseInt(this.$route.params.id));
-    this.chartOptions.series = gSportsmanSeriesFromPropertyIndividualList(this.$store);
+    this.item = await this.itemGet(parseInt(this.$route.params.id));
+    this.chartOptions.series = this.seriesFromMeasurements();
+    this.filter.rangeLimits = this.sportsmanMeasurementFilterDateLimits;
+    if (this.filter.rangeLimits.start) {
+      this.filter.range.start = moment(this.filter.rangeLimits.start).format('YYYY-MM-DD');
+      this.filter.range.end = moment(this.filter.rangeLimits.end).format('YYYY-MM-DD');
+    }
   }
 }
 

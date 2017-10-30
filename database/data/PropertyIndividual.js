@@ -1,4 +1,4 @@
-// import { PropertyIndividual } from '../../@Types'
+// import { PropertyIndividual } from '../../@types'
 /**
  * @type {PropertyIndividual[]}
  */

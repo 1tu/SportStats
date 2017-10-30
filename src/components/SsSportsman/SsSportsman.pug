@@ -1,7 +1,54 @@
-v-container(text-xs-center)
+v-container
   v-layout(row wrap)
-    h3 Sportsman
-    highcharts(v-if='chartOptions' :options="chartOptions" style='height:600px')
+    template(v-if='item')
+      v-flex(xs4)
+        h3.ma-0 {{ item.id }}
+
+      v-flex(xs3 offset-xs1)
+        v-menu(
+          lazy :close-on-content-click="false"
+          v-model="filter.showDateStart"
+          transition="scale-transition"
+          offset-y :nudge-right="40"
+          )
+          v-text-field(slot="activator" label="Pick start date" @change='onFilterChange'
+            v-model="filter.range.start" prepend-icon="event" readonly)
+          v-date-picker(v-model="filter.range.start" no-title scrollable actions
+            :allowed-dates="{ min:filter.rangeLimits.start, max: filter.range.end }")
+            template(slot-scope="{ save, cancel }")
+              v-card-actions
+                v-spacer
+                v-btn(flat color="primary" @click="cancel") Cancel
+                v-btn(flat color="primary" @click="save") OK
+
+      v-flex(xs3 offset-xs1)
+        v-menu(
+          lazy :close-on-content-click="false" v-model="filter.showDateEnd"
+          transition="scale-transition" offset-y :nudge-right="40"
+        )
+          v-text-field(slot="activator" label="Pick end date" @change='onFilterChange'
+            v-model="filter.range.end" prepend-icon="event" readonly)
+          v-date-picker(v-model="filter.range.end" no-title scrollable actions
+            :allowed-dates="{ min: filter.range.start, max: filter.rangeLimits.end }")
+            template(slot-scope="{ save, cancel }")
+              v-card-actions
+                v-spacer
+                v-btn(flat color="primary" @click="cancel") Cancel
+                v-btn(flat color="primary" @click="save") OK
+
+      v-flex(xs12)
+        highcharts(v-if='chartOptions' :options="chartOptions" style='height:600px')
+
+      v-flex.mt-3(xs12)
+        h4 Best measurements
+
+      v-flex(md6 xs12)
+        v-data-table.elevation-1(:headers="bestMeasurementsHeaders" :items="bestMeasurements" hide-actions)
+          template(slot="items" slot-scope="props")
+            td(v-for='header in bestMeasurementsHeaders'
+              :class='header.value === "id"? "text-xs-left" : "text-xs-right"') {{ props.item[header.value] }}
+              template(v-if='header.actionList' v-for='action in header.actionList')
+                v-btn(@click='action.onClick(props.item.id)') {{ action.name }}
 
   v-btn(fab bottom right color='pink' dark fixed)
     v-icon add

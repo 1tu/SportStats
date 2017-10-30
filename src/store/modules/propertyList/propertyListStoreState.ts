@@ -1,5 +1,5 @@
-import { Property } from '../../../../@Types';
+import { Property } from '../../../../@types';
 
-export interface PropertyListState {
+export interface PropertyListStoreState {
   items: Property[];
 }

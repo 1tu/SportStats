@@ -1,7 +1,7 @@
 v-container(text-xs-center)
   v-layout(row wrap)
     v-data-table.elevation-1(:headers="headers" :items="items" hide-actions)
-      template(slot="items" scope="props")
+      template(slot="items" slot-scope="props")
         td(v-for='header in headers'
             :class='{"text-xs-right": header.value !== "id"}') {{ props.item[header.value] }}
             template(v-if='header.actionList' v-for='action in header.actionList')

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
-import { store } from '../../store/index';
+import { store, State } from '../../store/index';
 import { SsUser } from '../index';
 import { routes } from '../../router';
 
@@ -10,9 +10,6 @@ import { routes } from '../../router';
 })
 export class SsNav extends Vue {
   routes = routes;
-
-  get navShow() {
-    return store.state.navShow;
-  }
+  @State navShow;
 }
 

@@ -1,5 +1,5 @@
-import { User } from '../../../../@Types';
+import { User } from '../../../../@types';
 
-export interface UserState {
+export interface UserStoreState {
   item: User;
 }

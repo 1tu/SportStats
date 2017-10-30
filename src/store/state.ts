@@ -1,17 +1,17 @@
 import {
-  UserListState, UserState, SportsmanState, SportsmanListState, SportState,
-  TeamListState, TeamState, PropertyListState,
+  UserListStoreState, UserStoreState, SportsmanStoreState, SportsmanListStoreState, SportStoreState,
+  TeamListStoreState, TeamStoreState, PropertyListStoreState,
 } from './modules';
 
-export interface State {
+export interface RootState {
   navShow: boolean;
 
-  userList?: UserListState;
-  user?: UserState;
-  sport?: SportState;
-  sportsmanList?: SportsmanListState;
-  sportsman?: SportsmanState;
-  teamList?: TeamListState;
-  team?: TeamState;
-  propertyList?: PropertyListState;
+  userList?: UserListStoreState;
+  user?: UserStoreState;
+  sport?: SportStoreState;
+  sportsmanList?: SportsmanListStoreState;
+  sportsman?: SportsmanStoreState;
+  teamList?: TeamListStoreState;
+  team?: TeamStoreState;
+  propertyList?: PropertyListStoreState;
 }

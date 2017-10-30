@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { CommonApi } from './_base';
-import { Sport } from '../../@Types';
+import { Sport } from '../../@types';
 
 class SportApi extends CommonApi<Sport> {
   constructor() {

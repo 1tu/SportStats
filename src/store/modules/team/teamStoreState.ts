@@ -1,7 +1,7 @@
-import { Team } from '../../../../@Types';
+import { Team } from '../../../../@types';
 import { IndividualSeriesOptions } from 'highcharts';
 
-export interface TeamState {
+export interface TeamStoreState {
   item: Team;
   seriesByProperty: {[prop: string]: IndividualSeriesOptions[]};
 }

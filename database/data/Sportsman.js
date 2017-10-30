@@ -1,4 +1,4 @@
-// import { Sportsman } from '../../@Types'
+// import { Sportsman } from '../../@types'
 /**
  * @type {Sportsman[]}
  */

@@ -1,6 +1,6 @@
 import { round, groupBy, transform, flatten, mapValues } from 'lodash-es';
 import moment from 'moment';
-import { SsModel, Property, PropertyIndividual, Sportsman, DateRange } from '../../@Types/index';
+import { SsModel, Property, PropertyIndividual, Sportsman, DateRange } from '../../@types/index';
 import { IndividualSeriesOptions } from 'highcharts';
 
 export function seriesFromPropertyIndividualList(arr: PropertyIndividual[], groupProp?: string): IndividualSeriesOptions[] {
@@ -13,7 +13,6 @@ export function seriesFromPropertyIndividualList(arr: PropertyIndividual[], grou
     }, []);
 }
 
-
 export function seriesListFromSportsman(arr: Sportsman[]): { [prop: string]: IndividualSeriesOptions[] } {
   return mapValues(
     groupBy(
@@ -23,7 +22,6 @@ export function seriesListFromSportsman(arr: Sportsman[]): { [prop: string]: Ind
       'property.name'),
     propList => seriesFromPropertyIndividualList((propList as any), 'sportsman_id'));
 }
-
 
 export function seriesGrowingFromSeries(series: IndividualSeriesOptions[], propertyName: string): IndividualSeriesOptions[] {
   const data = series.filter(item => item.data.length > 1)

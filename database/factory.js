@@ -1,5 +1,5 @@
 'use strict'
-// import * as Models from '../@Types/Models'
+// import * as Models from '../@types/Models'
 // import Chance from 'chance'
 
 const Factory = use('Factory')

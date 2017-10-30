@@ -1,4 +1,4 @@
-import { User } from '../../@Types/index';
+import { User } from '../../@types/index';
 import { capitalize } from 'lodash';
 
 export interface TableHeader<T> {
@@ -27,6 +27,7 @@ const defaultMakeHeadersOpts = {
     return !(this.excludes.indexOf(prop) !== -1 || prop.includes('_id'));
   },
 };
+
 export function makeHeaders<T>(cls: Class, opts: MakeHeadersOptions<T> = {}): TableHeader<T>[] {
   opts = { ...(defaultMakeHeadersOpts as MakeHeadersOptions<T>), ...opts };
   const instance: T = new cls();

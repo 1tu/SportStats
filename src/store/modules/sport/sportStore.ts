@@ -1,44 +1,43 @@
-import { ActionContext, Store, Module } from 'vuex';
-import { SportState } from './SportStoreState';
-import { getStoreAccessors } from 'vuex-typescript';
-import { State as RootState } from '../../index';
-import { Sport } from '../../../../@Types';
+import Vuex from 'vuex';
+import { State as vState, Getter as vGetter, Mutation as vMutation, Action as vAction, namespace } from 'vuex-class';
+import { getter, mutation, action, decorator, keymirror } from '../../vuexTypes';
+import { SportStoreState } from './SportStoreState';
+import { Sport } from '../../../../@types';
 import { sportApi } from '../../../api/sportApi';
 
-type SportContext = ActionContext<SportState, RootState>;
-
-export const sport = {
-  namespaced: true,
-  state: {
-    item: null,
-  },
-
-  getters: {
-    // getItemsByRole(state: SportState, getters, rootState: RootState, rootGetters) {
-    //   return (role_id: number) => state.items.filter((item) => item.role_id === role_id);
-    // },
-  },
-
-  mutations: {
-    item(state: SportState, item: Sport) {
-      state.item = item;
-    }
-  },
-
-  actions: {
-    async itemGet(context: SportContext, id: number): Promise<Sport> {
-      sSportItem(context, await sportApi.show(id));
-      return context.state.item;
-    },
-  },
+const storeName = 'sport';
+const state: SportStoreState = {
+  item: null
 };
 
-const { commit, read, dispatch } = getStoreAccessors<SportState, RootState>('sport');
+const getters = getter(state, {});
 
-const getters = sport.getters;
+const mutations = mutation(state, {
+  item(state: SportStoreState, item: Sport) {
+    state.item = item;
+  }
+});
 
-const actions = sport.actions;
-export const dSportGet = dispatch(actions.itemGet);
+const actions = action(state, {
+  async itemGet({ commit, state }, id: number): Promise<Sport> {
+    commit(types.mutation.item, await sportApi.show(id));
+    return state.item;
+  },
+});
 
-const mutations = sport.mutations;
-export const sSportItem = commit(mutations.item);
+const types = {
+  state: keymirror(state),
+  getter: keymirror(getters),
+  mutation: keymirror(mutations),
+  action: keymirror(actions)
+};
+
+export const sport = {
+  namespaced: true, state, getters, mutations, actions
+};
+
+export const SportTypes = types;
+export const SportState = decorator(namespace(storeName, vState), types.state);
+export const SportGetter = decorator(namespace(storeName, vGetter), types.getter);
+export const SportMutation = decorator(namespace(storeName, vMutation), types.mutation);
+export const SportAction = decorator(namespace(storeName, vAction), types.action);

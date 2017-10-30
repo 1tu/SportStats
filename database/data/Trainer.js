@@ -1,4 +1,4 @@
-// import { Trainer } from '../../@Types/Models'
+// import { Trainer } from '../../@types/Models'
 /**
  * @type {Trainer[]}
  */

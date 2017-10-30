@@ -1,49 +1,49 @@
-import { ActionContext, Store, Module } from 'vuex';
-import { SportsmanListState } from './SportsmanListStoreState';
-import { getStoreAccessors } from 'vuex-typescript';
-import { State as RootState } from '../../index';
-import { Sportsman } from '../../../../@Types';
+import Vuex from 'vuex';
+import { State as vState, Getter as vGetter, Mutation as vMutation, Action as vAction, namespace } from 'vuex-class';
+import { getter, mutation, action, decorator, keymirror } from '../../vuexTypes';
+import { SportsmanListStoreState } from './SportsmanListStoreState';
+import { Sportsman } from '../../../../@types';
 import { sportsmanApi } from '../../../api/sportsmanApi';
 
-type SportsmanContext = ActionContext<SportsmanListState, RootState>;
-
-export const sportsmanList = {
-  namespaced: true,
-  state: {
-    items: [],
-  },
-
-  getters: {
-    itemById(state: SportsmanListState) {
-      return (id: number) => state.items.filter((item) => item.id === id)[0];
-    }
-  },
-
-  mutations: {
-    items(state: SportsmanListState, items: Sportsman[]) {
-      state.items = items;
-    }
-  },
-
-  actions: {
-    async itemsGet(context: SportsmanContext): Promise<Sportsman[]> {
-      if (context.state.items.length) {
-        return context.state.items;
-      }
-      const items = await sportsmanApi.index();
-      sSportsmanItems(context, items);
-      return context.state.items;
-    },
-  },
+const storeName = 'sportsmanList';
+const state: SportsmanListStoreState = {
+  items: []
 };
 
-const { commit, read, dispatch } = getStoreAccessors<SportsmanListState, RootState>('sportsmanList');
+const getters = getter(state, {
+  itemById(state) {
+    return (id: number) => state.items.filter((item) => item.id === id)[0];
+  }
+});
 
-const getters = sportsmanList.getters;
-export const gSportsmanItemById = read(getters.itemById);
+const mutations = mutation(state, {
+  items(state, items: Sportsman[]) {
+    state.items = items;
+  }
+});
 
-const actions = sportsmanList.actions;
-export const dSportsmanItemsGet = dispatch(actions.itemsGet);
+const actions = action(state, {
+  async itemsGet({ commit, state, rootState }): Promise<Sportsman[]> {
+    if (state.items.length) { return state.items; }
+    const items = await sportsmanApi.index();
+    commit(types.mutation.items, items);
+    return state.items;
+  }
+});
 
-const mutations = sportsmanList.mutations;
-export const sSportsmanItems = commit(mutations.items);
+const types = {
+  state: keymirror(state),
+  getter: keymirror(getters),
+  mutation: keymirror(mutations),
+  action: keymirror(actions)
+};
+
+export const sportsmanList = {
+  namespaced: true, state, getters, mutations, actions
+};
+
+export const SportsmanListTypes = types;
+export const SportsmanListState = decorator(namespace(storeName, vState), types.state);
+export const SportsmanListGetter = decorator(namespace(storeName, vGetter), types.getter);
+export const SportsmanListMutation = decorator(namespace(storeName, vMutation), types.mutation);
+export const SportsmanListAction = decorator(namespace(storeName, vAction), types.action);

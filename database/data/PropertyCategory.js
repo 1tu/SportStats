@@ -1,4 +1,4 @@
-// import { PropertyCategory } from '../../@Types/Models'
+// import { PropertyCategory } from '../../@types/Models'
 /**
  * @type {PropertyCategory[]}
  */

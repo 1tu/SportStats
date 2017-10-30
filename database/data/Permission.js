@@ -1,4 +1,4 @@
-// import { Permission } from '../../@Types/Models'
+// import { Permission } from '../../@types/Models'
 /**
  * @type {Permission[]}
  */
