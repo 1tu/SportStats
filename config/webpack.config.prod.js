@@ -18,7 +18,7 @@ const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin'),
 // });
 
 // const purifyCss = new PurifyCSSPlugin({
-//   paths: glob.sync(path.join(__dirname, '../src/**/*.html')),
+//   paths: glob.sync(path.join(__dirname, '../client/**/*.html')),
 //   purifyOptions: {
 //     info: true,
 //     whitelist: []
@@ -47,7 +47,7 @@ webpackConfig.module.rules = [...webpackConfig.module.rules,
     {
       loader: 'vuetify-loader',
       options: {
-        theme: helpers.root('./src/stylus/theme.styl')
+        theme: helpers.root('./client/stylus/theme.styl')
       }
     }
   ],

@@ -3,7 +3,7 @@ const helpers = require('./helpers'),
 
 let config = {
   entry: {
-    'main': helpers.root('/src/main.ts')
+    'main': helpers.root('/client/main.ts')
   },
   output: {
     path: helpers.root('/public'),
@@ -27,11 +27,10 @@ let config = {
     }, {
       test: /\.ts$/,
       exclude: /node_modules/,
-      loader: 'awesome-typescript-loader'
-    }, {
-      test: /\.html$/,
-      loader: 'raw-loader',
-      exclude: ['./src/index.html']
+      loader: 'awesome-typescript-loader',
+      options: {
+        configFileName: 'tsconfig.client.json',
+      }
     }, {
       test: /\.pug$/,
       loader: ['html-loader', 'pug-html-loader'],

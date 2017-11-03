@@ -8,7 +8,7 @@ webpackConfig.module.rules = [...webpackConfig.module.rules, {
   use: ['style-loader', 'css-loader', 'stylus-loader', {
     loader: 'vuetify-loader',
     options: {
-      theme: helpers.root('/src/stylus/theme.styl')
+      theme: helpers.root('/client/stylus/theme.styl')
     }
   }]
 }, {
@@ -31,11 +31,11 @@ webpackConfig.devServer = {
     aggregateTimeout: 300,
     poll: 1000
   },
-  contentBase: './src',
+  contentBase: './client',
   open: true,
   proxy: {
     "/": {
-      target: "http://localhost:3334",
+      target: "http://localhost:3003",
     }
   }
 };

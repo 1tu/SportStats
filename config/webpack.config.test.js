@@ -15,35 +15,27 @@ webpackConfig.module.rules = [{
       sourceMap: false
     }
   }
-},
-{
-  test: /\.html$/,
-  loader: 'raw-loader',
-  exclude: ['./src/index.html']
-},
-{
+}, {
   test: /\.styl$/,
   use: ['style-loader', 'css-loader', 'stylus-loader', {
     loader: 'vuetify-loader',
     options: {
-      theme: helpers.root('./src/stylus/theme.styl')
+      theme: helpers.root('./client/stylus/theme.styl')
     }
   }]
-},
-{
+}, {
   test: /\.(jpg|png|gif|eot|svg|ttf|woff|woff2)$/,
   loader: 'url-loader?limit=8192'
-}
-];
+}];
 
 webpackConfig.plugins = [...webpackConfig.plugins,
-new SourceMapDevToolPlugin({
-  filename: null, // if no value is provided the sourcemap is inlined
-  test: /\.(ts|js)($|\?)/i
-}),
-new DefinePlugin({
-  'process.env': env
-})
+  new SourceMapDevToolPlugin({
+    filename: null, // if no value is provided the sourcemap is inlined
+    test: /\.(ts|js)($|\?)/i
+  }),
+  new DefinePlugin({
+    'process.env': env
+  })
 ];
 
 webpackConfig.devtool = 'inline-source-map';
