@@ -10,7 +10,7 @@ const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin'),
   webpackConfig = require('./webpack.config.base'),
   helpers = require('./helpers'),
   DefinePlugin = require('webpack/lib/DefinePlugin'),
-  env = require('../environment/prod.env');
+  env = require('./prod.env');
 
 // const extractSass = new ExtractTextPlugin({
 //   filename: 'css/[name].[contenthash].css',

@@ -3,7 +3,7 @@ var helpers = require('./helpers'),
   webpackConfig = require('./webpack.config.base'),
   DefinePlugin = require('webpack/lib/DefinePlugin'),
   SourceMapDevToolPlugin = require('webpack/lib/SourceMapDevToolPlugin'),
-  env = require('../environment/dev.env');
+  env = require('./dev.env');
 
 webpackConfig.module.rules = [{
   test: /\.ts$/,
